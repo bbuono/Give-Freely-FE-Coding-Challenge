@@ -7,7 +7,7 @@ export const config: PlasmoCSConfig = {
 };
 
 async function domContentLoaded(): Promise<void> {
-  console.log('DOM Content Loaded - search');
+  console.log('DOM Content Loaded - bell');
 }
 
 function main(): void {
