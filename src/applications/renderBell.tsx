@@ -1,11 +1,11 @@
 import { createRoot } from 'react-dom/client';
 
-import { createGoogleComShadowRootForBell } from '~utils/createGoogleComShadowRootForBell';
+import { createGoogleComBellShadowRoot } from '~utils/createGoogleComBellShadowRoot';
 
 import { Bell } from './Bell';
 
 export function renderBell(): void {
-  const root = createRoot(createGoogleComShadowRootForBell());
+  const root = createRoot(createGoogleComBellShadowRoot());
 
   root.render(<Bell />);
 }
