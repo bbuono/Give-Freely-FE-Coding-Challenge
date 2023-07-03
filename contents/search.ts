@@ -1,5 +1,6 @@
 import type { PlasmoCSConfig } from 'plasmo';
 
+import { onDomContentLoaded } from '~contents-utils/onDomContentLoaded';
 import googleSites from '~google-sites/sites.json';
 
 export const config: PlasmoCSConfig = {
@@ -11,11 +12,7 @@ async function domContentLoaded(): Promise<void> {
 }
 
 function main(): void {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', domContentLoaded);
-  } else {
-    domContentLoaded();
-  }
+  onDomContentLoaded(domContentLoaded);
 }
 
 void main();
