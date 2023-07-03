@@ -19,7 +19,9 @@ export class API {
         return response.json();
       }
 
-      return Promise.reject(response);
+      return Promise.reject(
+        new Error(`Request was rejected with code \`${response.status}\``),
+      );
     });
   }
 }
