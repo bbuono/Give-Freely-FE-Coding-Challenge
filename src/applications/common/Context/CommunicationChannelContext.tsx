@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { createContext, useContext } from 'react';
 
-import type { ContentCommunicationChannel } from '~communication-channel';
+import type { ContentCommunicationChannel } from '~communication-channel/channels/ContentCommunicationChannel';
 
 type CommunicationChannelContextValue = ContentCommunicationChannel;
 

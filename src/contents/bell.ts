@@ -1,12 +1,9 @@
 import type { PlasmoCSConfig } from 'plasmo';
 
-import { renderBell } from '~applications';
-import {
-  ChannelName,
-  Client,
-  ContentCommunicationChannel,
-} from '~communication-channel';
-import { onDomContentLoaded } from '~contents-utils/onDomContentLoaded';
+import { renderBell } from '~applications/bell/renderBell';
+import { ContentCommunicationChannel } from '~communication-channel/channels/ContentCommunicationChannel';
+import { ChannelName, Client } from '~communication-channel/enums';
+import { onDomContentLoaded } from '~utils/onDomContentLoaded';
 
 export const config: PlasmoCSConfig = {
   matches: ['https://*.google.com/search*', 'https://*.google.com.ar/search*'],

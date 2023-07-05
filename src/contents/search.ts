@@ -1,14 +1,10 @@
 import type { PlasmoCSConfig } from 'plasmo';
 
-import {
-  Channel,
-  ChannelName,
-  Client,
-  ContentCommunicationChannel,
-  type ParticipantsChangeMessage,
-} from '~communication-channel';
-import { onDomContentLoaded } from '~contents-utils/onDomContentLoaded';
+import { ContentCommunicationChannel } from '~communication-channel/channels/ContentCommunicationChannel';
+import { Channel, ChannelName, Client } from '~communication-channel/enums';
+import type { ParticipantsChangeMessage } from '~communication-channel/types';
 import { getParticipantElements } from '~utils/getParticipantElements';
+import { onDomContentLoaded } from '~utils/onDomContentLoaded';
 
 export const config: PlasmoCSConfig = {
   matches: ['https://*.google.com/search*', 'https://*.google.com.ar/search*'],

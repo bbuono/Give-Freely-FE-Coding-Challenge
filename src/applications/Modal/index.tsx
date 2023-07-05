@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import type { Participant } from '~API/types';
-import { useCommunicationChannel } from '~applications/Context';
-import { Channel, type OpenModalMessage } from '~communication-channel';
-import type { ParticipantsChangeMessage } from '~communication-channel';
+import { useCommunicationChannel } from '~applications/common/Context';
+import { Channel } from '~communication-channel/enums';
+import type {
+  OpenModalMessage,
+  ParticipantsChangeMessage,
+} from '~communication-channel/types';
 import { getRandomElement } from '~utils/getRandomElement';
-import { mergeMessages } from '~utils/mergeMessages';
 
 import { useModal } from './useModal';
 
