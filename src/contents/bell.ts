@@ -1,12 +1,7 @@
 import type { PlasmoCSConfig } from 'plasmo';
 
-import { renderBell, renderModal } from '~applications';
-import {
-  Channel,
-  Client,
-  ContentCommunicationChannel,
-} from '~communication-channel';
-import type { ParticipantsChangeMessage } from '~communication-channel';
+import { renderBell } from '~applications';
+import { Client, ContentCommunicationChannel } from '~communication-channel';
 import { onDomContentLoaded } from '~contents-utils/onDomContentLoaded';
 
 export const config: PlasmoCSConfig = {
@@ -22,21 +17,7 @@ async function domContentLoaded(): Promise<void> {
 
   await channel.initialize();
 
-  channel.subscribeToChannel<ParticipantsChangeMessage>(
-    Channel.PARTICIPANTS_CHANGE,
-    (payload) => {
-      console.log('Received participants change message', payload.changed);
-    },
-  );
-
-  const fetchParticipantsResponse = await channel.fetchParticipants();
-  const websites = fetchParticipantsResponse.payload;
-
-  console.log('Response from Bell', websites);
-
   renderBell(channel);
-
-  console.log('DOM Content Loaded - bell');
 }
 
 function main(): void {

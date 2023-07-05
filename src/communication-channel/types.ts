@@ -1,4 +1,4 @@
-import type { ParticipantsResponse } from '~API/types';
+import type { Participant } from '~API/types';
 
 import { Channel, Client, MessageType } from './enums';
 
@@ -42,10 +42,12 @@ export type BroadcastMessage<P extends Record<string, unknown> = {}> = {
   type: MessageType.BROADCAST_MESSAGE;
   channel: Channel;
   sender: Client;
+  recipient: Client;
   payload: P;
 };
 
-export type ParticipantsChangeMessage = { changed: true };
+export type ParticipantsChangeMessage = { participants: Participant[] };
+export type OpenModalMessage = { opened: true };
 
 export type FetchParticipantsRequest = {
   type: MessageType.FETCH_PARTICIPANTS_REQUEST;
@@ -56,7 +58,7 @@ export type FetchParticipantsResponse =
       type: MessageType.FETCH_PARTICIPANTS_RESPONSE;
       success: true;
       message: 'OK';
-      payload: ParticipantsResponse['record']['websites'];
+      payload: Participant[];
     }
   | {
       type: MessageType.FETCH_PARTICIPANTS_RESPONSE;

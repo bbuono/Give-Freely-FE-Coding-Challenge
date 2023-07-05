@@ -1,39 +1,32 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
+
+import { useCommunicationChannel } from '~applications/Context';
+import { Channel } from '~communication-channel';
+import type { ParticipantsChangeMessage } from '~communication-channel';
+
+import { useModal } from './useModal';
 
 interface ModalProps {
   opened?: boolean;
 }
 
-export const Modal: React.FC<ModalProps> = ({ opened = true }) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [modalStyle, setModalStyle] = useState<CSSProperties>({
-    top: '-500px',
-    left: '-500px',
-  });
-
-  const calculatePosition = useCallback(
-    (htmlDivElement: HTMLDivElement): void => {
-      const { innerWidth, innerHeight } = window;
-      const { width, height } = htmlDivElement.getBoundingClientRect();
-
-      const left = innerWidth / 2 - width / 2;
-      const top = innerHeight / 2 - height / 2;
-
-      setModalStyle({ ...modalStyle, left, top });
-    },
-    [setModalStyle],
-  );
+export const Modal: React.FC<ModalProps> = ({ opened = false }) => {
+  const channel = useCommunicationChannel();
+  const [modalRef, showModal, setShowModal, modalStyle] = useModal(opened);
 
   useEffect(() => {
-    setShowModal(opened);
+    const unsubscribeToModalChannel =
+      channel.subscribeToChannel<ParticipantsChangeMessage>(
+        Channel.MODAL,
+        () => {
+          setShowModal(true);
+        },
+      );
 
-    if (modalRef.current && showModal) {
-      calculatePosition(modalRef.current);
-    }
-  }, [opened, setShowModal, showModal, modalRef.current]);
+    return () => {
+      unsubscribeToModalChannel();
+    };
+  }, [channel, setShowModal]);
 
   if (!showModal) {
     return null;

@@ -2,7 +2,7 @@ export enum Client {
   BELL,
   SEARCH,
   MODAL,
-  POPUP,
+  BANNER,
   BACKGROUND,
 }
 
@@ -14,8 +14,10 @@ export enum MessageType {
   FETCH_PARTICIPANTS_REQUEST,
   FETCH_PARTICIPANTS_RESPONSE,
   BROADCAST_MESSAGE,
+  OPEN_MODAL_MESSAGE,
 }
 
 export enum Channel {
   PARTICIPANTS_CHANGE,
+  MODAL,
 }

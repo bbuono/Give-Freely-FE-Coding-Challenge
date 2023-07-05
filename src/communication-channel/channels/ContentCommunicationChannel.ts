@@ -9,11 +9,13 @@ import type {
 } from '../types';
 import { CommunicationChannel } from './CommunicationChannel';
 
-type SubscriptionCallback = (payload: Record<string, unknown>) => void;
+type Payload = Record<string, unknown>;
+type SubscriptionCallback = (payload: Payload) => void;
 
 export class ContentCommunicationChannel extends CommunicationChannel {
   #client: Client;
   #subscriptions = new Map<Channel, SubscriptionCallback>();
+  #messages = new Map<Channel, Set<BroadcastMessage>>();
 
   constructor(client: Client, clients: Client[] = []) {
     super(client, clients);
@@ -39,33 +41,56 @@ export class ContentCommunicationChannel extends CommunicationChannel {
     return this.sendToBackground<BroadcastRequest, BroadcastResponse>(request);
   }
 
-  async subscribeToChannel<Payload extends Record<string, unknown>>(
+  subscribeToChannel<Payload extends Record<string, unknown>>(
     channel: Channel,
     callback: (payload: Payload) => void,
-  ): Promise<() => void> {
+  ): () => void {
     const unsubscribeFromChannel = () => {
       this.#subscriptions.delete(channel);
     };
 
     this.#subscriptions.set(channel, callback as SubscriptionCallback);
 
+    const maybeMessages = this.#messages.get(channel);
+
+    if (maybeMessages) {
+      for (const message of maybeMessages) {
+        callback(message.payload as Payload);
+      }
+      this.#messages.delete(channel);
+    }
+
     return unsubscribeFromChannel;
   }
 
-  #broadcastListener: AddListener = (message, _sender, sendResponse) => {
+  #getOrCreateChannelMessages(channel: Channel): Set<BroadcastMessage> {
+    const maybeMessagesSet = this.#messages.get(channel);
+
+    if (!maybeMessagesSet) {
+      this.#messages.set(channel, new Set());
+
+      return this.#getOrCreateChannelMessages(channel);
+    }
+
+    return maybeMessagesSet;
+  }
+
+  #broadcastListener: AddListener = (message, _sender, sendResponse): void => {
     if (message?.type !== MessageType.BROADCAST_MESSAGE) {
       return;
     }
 
     const broadcastMessage: BroadcastMessage = message;
+    const { sender, recipient, channel, payload } = broadcastMessage;
 
-    if (broadcastMessage.sender !== this.#client) {
-      const maybeSubscription = this.#subscriptions.get(
-        broadcastMessage.channel,
-      );
+    if (sender !== this.#client && recipient === this.#client) {
+      const maybeSubscription = this.#subscriptions.get(channel);
 
       if (maybeSubscription) {
-        maybeSubscription(broadcastMessage.payload);
+        maybeSubscription(payload);
+      } else {
+        const messages = this.#getOrCreateChannelMessages(channel);
+        messages.add(broadcastMessage);
       }
     }
 
