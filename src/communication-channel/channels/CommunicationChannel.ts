@@ -1,6 +1,6 @@
 import { browser } from '~browser';
 
-import { Client, MessageType } from '../enums';
+import { ChannelName, Client, MessageType } from '../enums';
 import type {
   FetchParticipantsRequest,
   FetchParticipantsResponse,
@@ -8,17 +8,26 @@ import type {
   PingResponse,
 } from '../types';
 
+export interface Options {
+  channelName: ChannelName;
+  client: Client;
+  clients: Client[];
+}
+
 export class CommunicationChannel {
+  #channelName: ChannelName;
   #client: Client;
   #clients: Client[];
 
-  constructor(client: Client, clients: Client[] = []) {
-    this.#client = client;
-    this.#clients = clients;
+  constructor(options: Options) {
+    this.#channelName = options.channelName;
+    this.#client = options.client;
+    this.#clients = options.clients;
   }
 
   async initialize(): Promise<void> {
     const request: PingRequest = {
+      channelName: this.#channelName,
       type: MessageType.PING,
       client: this.#client,
       clients: this.#clients,

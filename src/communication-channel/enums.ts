@@ -1,3 +1,8 @@
+export enum ChannelName {
+  GOOGLE = 'GOOGLE',
+  BANNER = 'BANNER',
+}
+
 export enum Client {
   BELL,
   SEARCH,

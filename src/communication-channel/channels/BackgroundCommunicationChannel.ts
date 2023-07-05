@@ -28,7 +28,7 @@ export class BackgroundCommunicationChannel {
       const pingRequest: PingRequest = request;
 
       const handshakePromises = clients.maybeCreateHandshakePromises(
-        id,
+        pingRequest.channelName,
         pingRequest.clients,
       );
 
@@ -57,7 +57,7 @@ export class BackgroundCommunicationChannel {
         });
 
       const clientToBeConnected = clients.getOrCreateClientToBeConnected(
-        id,
+        pingRequest.channelName,
         pingRequest.client,
       );
       const { callback } = clientToBeConnected;
@@ -95,13 +95,15 @@ export class BackgroundCommunicationChannel {
       return;
     }
 
+    const broadcastRequest: BroadcastRequest = request;
     const id = clients.getId(sender);
-    const tabClients = clients.getClients(id);
+    const tabClients = clients.getClients(broadcastRequest.channelName);
 
     if (!tabClients) {
       const message = `Couldn't find clients for tab id ${id}`;
       const broadcastResponse: BroadcastResponse = {
         type: MessageType.BROADCAST_RESPONSE,
+        channelName: broadcastRequest.channelName,
         success: false,
         message,
       };
@@ -115,7 +117,6 @@ export class BackgroundCommunicationChannel {
       return;
     }
 
-    const broadcastRequest: BroadcastRequest = request;
     const recipients = tabClients.filter(
       (client) => client !== broadcastRequest.sender,
     );
@@ -126,6 +127,7 @@ export class BackgroundCommunicationChannel {
           new Promise<void>((resolve, reject) => {
             const broadcastMessage: BroadcastMessage = {
               recipient,
+              channelName: broadcastRequest.channelName,
               type: MessageType.BROADCAST_MESSAGE,
               channel: broadcastRequest.channel,
               payload: broadcastRequest.payload,
@@ -143,6 +145,7 @@ export class BackgroundCommunicationChannel {
       .then(() => {
         const broadcastResponse: BroadcastResponse = {
           type: MessageType.BROADCAST_RESPONSE,
+          channelName: broadcastRequest.channelName,
           success: true,
           message: 'OK',
         };
@@ -156,6 +159,7 @@ export class BackgroundCommunicationChannel {
       .catch((reason) => {
         const broadcastResponse: BroadcastResponse = {
           type: MessageType.BROADCAST_RESPONSE,
+          channelName: broadcastRequest.channelName,
           success: true,
           message: reason instanceof Error ? reason.message : 'Unknown error',
         };
