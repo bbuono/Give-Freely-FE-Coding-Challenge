@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useCommunicationChannel } from '~applications/Context';
-import { Channel } from '~communication-channel';
+import { useCommunicationChannel } from '~applications/common/Context';
+import { Channel } from '~communication-channel/enums';
 import type {
   OpenModalMessage,
   ParticipantsChangeMessage,
-} from '~communication-channel';
+} from '~communication-channel/types';
 
 export const Bell: React.FC = () => {
   const [showIcon, setShowIcon] = useState<boolean>(false);

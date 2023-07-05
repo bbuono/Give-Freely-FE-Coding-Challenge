@@ -1,4 +1,4 @@
-import { BackgroundCommunicationChannel } from '~communication-channel';
+import { BackgroundCommunicationChannel } from '~communication-channel/channels/BackgroundCommunicationChannel';
 
 export {};
 

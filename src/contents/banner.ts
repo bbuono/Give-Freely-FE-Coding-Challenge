@@ -1,15 +1,12 @@
 import type { PlasmoCSConfig } from 'plasmo';
 
 import type { Participant } from '~API/types';
-import { renderBanner } from '~applications';
-import {
-  ChannelName,
-  Client,
-  ContentCommunicationChannel,
-} from '~communication-channel';
-import { onDomContentLoaded } from '~contents-utils/onDomContentLoaded';
+import { renderBanner } from '~applications/banner/renderBanner';
+import { ContentCommunicationChannel } from '~communication-channel/channels/ContentCommunicationChannel';
+import { ChannelName, Client } from '~communication-channel/enums';
 import { createParticipantsRegExp } from '~utils/createParticipantsRegExp';
 import { getDomain } from '~utils/getDomain';
+import { onDomContentLoaded } from '~utils/onDomContentLoaded';
 
 export const config: PlasmoCSConfig = {
   matches: ['<all_urls>'],

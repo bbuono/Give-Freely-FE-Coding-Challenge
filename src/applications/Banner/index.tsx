@@ -1,5 +1,4 @@
 import type { Participant } from '~API/types';
-import { CountButton } from '~features/CountButton';
 import { getRandomElement } from '~utils/getRandomElement';
 
 interface BannerProps {
