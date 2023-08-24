@@ -1,0 +1,64 @@
+.modalContainer{
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup, .modal{
+    position: absolute;
+    z-index: 2;
+    pointer-events: all;
+}
+
+.popup{
+    min-width: 350px;
+    min-height: 150px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.modal{
+    width: inherit;
+    height: inherit;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .6);
+    transition: all 300ms;
+    pointer-events: all;
+    z-index: 1;
+}
+
+.title{
+    padding: 10px 20px;
+    color: black;
+    font-size: 24px;
+    background: lightgray;
+}
+
+.popupBody{
+    padding: 30px 20px;
+    font-size: 20px;
+}
+
+.close{
+    position: absolute;
+    background: black;
+    border-radius: 10px;
+    padding: 3px;
+    width: 15px;
+    display: flex;
+    justify-content: center;
+    background: white;
+    top: 15px;
+    right: 15px;
+    color: black;
+    cursor: pointer;
+}

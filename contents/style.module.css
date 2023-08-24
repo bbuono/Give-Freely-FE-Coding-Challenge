@@ -1,0 +1,30 @@
+
+.highlight{
+    position:absolute;
+    top: 0;
+    border: 1px solid yellow;
+    pointer-events:none;
+}
+
+.bell{
+    width: 20px;
+    height: 20px;
+    background: yellow;
+    position: absolute;
+    right: -15px;
+    border-radius: 20px;
+    padding: 6px;
+    top: -15px;
+    border: 1px solid white;
+    pointer-events:all;
+    cursor: pointer;
+}
+
+.banner{
+    background:yellow;
+    width:100%;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,22 @@
+
+.main{
+    display:flex;
+    flex-direction: column;
+    padding: 10px;
+    min-width: 350px;
+}
+
+.company{
+    color: var(--text-color);
+    font-size: 14px;
+}
+.company .message{
+    padding: 15px 20px;
+    font-size: 16px;
+    background-color: var(--secondary-color);
+    margin: 5px 0;
+
+}
+.company .message span{
+    display: block;
+}
