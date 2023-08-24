@@ -1,0 +1,13 @@
+:root {
+    --max-width: 1100px;
+    --text-color: #2a2a2a;
+    --main-color: #005A63;
+    --main-color-dark: #01363b;
+    --secondary-color: #e4e5ea;
+    --banner-color: #E7FFF7;
+}
+
+body {
+    color: var(--text-color);
+    background: var(--foreground-color);
+}

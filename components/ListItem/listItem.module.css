@@ -1,0 +1,8 @@
+.item{
+    list-style: none;
+    margin: 5px 0;
+    padding: 5 10px;
+    border: 1px solid var(--main-color);
+    color: var(--text-color);
+    border-radius: 20px;
+}
